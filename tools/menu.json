@@ -53,7 +53,7 @@
   ],
   "sauces": ["Knoblauch","Kräuter","Scharf","Cocktail","Curry","Curryscharf"],
   "offers": [
-    {"day":"Dienstag","title":"Döner","price":"5,00"},
+    {"day":"Dienstag","title":"Döner","price":"6,00"},
     {"day":"Mittwoch","title":"Ganzes Hähnchen","price":"10,00"},
     {"day":"Freitag","title":"Steak Döner","price":"9,80","extra":"Steak Dürüm","extraPrice":"10,80"}
   ]

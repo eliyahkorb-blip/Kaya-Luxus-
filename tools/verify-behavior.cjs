@@ -12,7 +12,7 @@ function setup({saved, failStorage=false, now='2026-09-10T09:00:00Z'}={}) {
   const fixed = new Date(now).getTime();
   const context = {focus:null, created:[], intervals:[]};
   class Element {
-    constructor(name) {this.name=name;this.hidden=false;this.dataset={};this.attrs={};this.handlers={};this.children=[];this.style={setProperty(){}};this.classList={toggle(){}};this.links=[];}
+    constructor(name) {this.name=name;this.hidden=false;this.dataset={};this.attrs={};this.handlers={};this.children=[];this.style={setProperty(){}};this.classes=new Set();this.classList={toggle:(n,on)=>{if(on)this.classes.add(n);else this.classes.delete(n);}};this.links=[];}
     setAttribute(k,v){this.attrs[k]=v;}
     addEventListener(k,f){this.handlers[k]=f;}
     querySelector(s){return s==='a'?this.links[0]||null:null;}
@@ -53,4 +53,5 @@ test('Revocation or clearing storage in another tab removes the map',()=>{const 
 test('Berlin opening boundaries include winter and summer time',()=>{for(const [now,expected] of [['2026-01-10T09:59:00Z','heute ab 11'],['2026-01-10T10:00:00Z','jetzt geöffnet'],['2026-01-10T19:00:00Z','morgen ab 11'],['2026-07-10T08:59:00Z','heute ab 11'],['2026-07-10T09:00:00Z','jetzt geöffnet'],['2026-07-10T18:00:00Z','morgen ab 11']])assert.ok(setup({now}).status.textContent.includes(expected),now);});
 test('Mobile navigation opens, Escape restores, desktop resize resets',()=>{const a=setup();a.els['nav-toggle'].click();assert.equal(a.els['nav-toggle'].attrs['aria-expanded'],'true');assert.equal(a.main.inert,true);a.doc.handlers.keydown({key:'Escape'});assert.equal(a.main.inert,false);assert.equal(a.context.focus,a.els['nav-toggle']);a.els['nav-toggle'].click();a.media.change({matches:true});assert.equal(a.main.inert,false);});
 test('Reading controls respect bounds and reset',()=>{const a=setup();for(let i=0;i<5;i++)a.els['font-plus'].click();assert.equal(a.els['font-level'].textContent,'125 %');assert.equal(a.els['font-plus'].disabled,true);a.els['contrast-toggle'].click();assert.equal(a.els['contrast-toggle'].attrs['aria-pressed'],'true');a.els['reading-reset'].click();assert.equal(a.els['font-level'].textContent,'100 %');assert.equal(a.els['contrast-toggle'].attrs['aria-pressed'],'false');});
+test('Enlarged reading size marks the document for reflow rules',()=>{const a=setup();assert.equal(a.doc.documentElement.classes.has('text-scaled'),false,'not set at 100 %');a.els['font-plus'].click();assert.equal(a.doc.documentElement.classes.has('text-scaled'),true,'set above 100 %');a.els['font-plus'].click();assert.equal(a.doc.documentElement.classes.has('text-scaled'),true,'still set at 125 %');a.els['reading-reset'].click();assert.equal(a.doc.documentElement.classes.has('text-scaled'),false,'removed after reset');});
 console.log(`${tests} source-level interaction tests passed. No browser/visual testing performed.`);

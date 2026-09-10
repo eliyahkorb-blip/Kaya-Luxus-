@@ -64,6 +64,11 @@ Die Vorschau steht auf `noindex`. `--production` aktiviert die Indexierung der d
 7. **Eigene Bilder:** Nutzungsrechte am bereitgestellten Standortfoto und am Ausgangslogo müssen beim Betreiber vorliegen. Das Foto wurde durch den Auftraggeber bereitgestellt; eine eigenständige Rechtekette ist nicht dokumentiert. Die neuen Foodfotos sind dagegen mit Unsplash-Quellen dokumentiert.
 8. **Browser-Freigabe:** nach GitHub-Veröffentlichung die tatsächliche mobile und Desktop-Darstellung prüfen. Bei der späteren Hauptdomain zusätzlich HTTPS, Weiterleitungen, Search Console und öffentliche Erreichbarkeit prüfen.
 
+9. **Kleinstunternehmen-Status:** für die BFSG-Einordnung auf `barrierefreiheit.html` bestätigen, ob weniger als zehn Personen beschäftigt sind und ob Jahresumsatz oder Jahresbilanzsumme höchstens zwei Millionen Euro betragen. Die Seite stützt sich vorrangig darauf, dass über die Website kein Vertrag geschlossen wird; die Kleinstunternehmen-Ausnahme ist das zweite Standbein und bislang unbestätigt.
+10. **Behördliche Zulassung:** klären, ob für den Betrieb eine Gaststättenerlaubnis oder eine vergleichbare Zulassung vorliegt. Falls ja, ist nach § 5 Absatz 1 Nummer 3 DDG die zuständige Aufsichtsbehörde im Impressum zu nennen. Die aktuelle Karte enthält keine alkoholischen Getränke; deshalb wurde keine Behörde eingetragen.
+11. **Standortkoordinaten:** weiterhin bewusst nicht im Schema hinterlegt. Wenn belastbare Koordinaten des Eingangs vorliegen, können sie als `geo` ergänzt werden; die Prüfung `tools/verify.py` verbietet sie derzeit ausdrücklich, um unbestätigte Werte zu vermeiden.
+12. **Barrierefreiheit:** Prüfdatum und Aussagen auf `barrierefreiheit.html` bei jeder inhaltlichen Änderung nachziehen. Ein Test mit echten Screenreadern und mit Betroffenen steht weiterhin aus.
+
 Die Rechtstexte sind an die tatsächliche technische Umsetzung und öffentlich geprüfte Quellen angepasst. Eine verbindliche anwaltliche Prüfung der gesamten Unternehmenssituation oder der Lebensmittelkennzeichnung ist damit nicht erfolgt.
 
 ## Durchgeführte Prüfung
@@ -74,7 +79,11 @@ Die Rechtstexte sind an die tatsächliche technische Umsetzung und öffentlich g
 - Neun Ausführungstests mit einem In-Memory-DOM: keine Karte vor Einwilligung, einmaliges Laden, Widerruf, Ablehnen/Dialogschließen, gültige/abgelaufene/fehlerhafte Einwilligungen, gesperrter Browser-Speicher, Widerruf in einem anderen Tab, Berliner Sommer-/Winterzeit an Öffnungsgrenzen, mobile Menüsteuerung und Leseeinstellungen.
 - Hauptfarbkombinationen rechnerisch geprüft: Weiß auf KAYA-Rot 5,20:1, Fließtextgrau auf Papier 5,43:1, Olivtext auf Papier 5,25:1 und helles Rot auf Graphit 5,90:1. Das ist keine vollständige WCAG-Konformitätsprüfung.
 - Verwendete Bilddateien vollständig decodiert; eine zunächst unvollständige Falafel-Datei wurde vor Einbau ersetzt.
-- Kein Browser-/Screenshot-/End-to-End-Test. Keine gemessenen Lighthouse-Scores oder Core Web Vitals. Responsive Regeln und Schriftbreiten wurden im Quelltext geprüft, nicht durch eine gerenderte Browseransicht bestätigt.
+- Browserdurchgang mit Chromium 141 über alle acht Seiten in den Breiten 375, 768 und 1440 Pixel: kein Querscrollen, keine JavaScript-Fehler, keine fehlenden Dateien, Einwilligungsdialog und mobile Navigation funktionsfähig.
+- Automatisierte Barrierefreiheitsprüfung mit axe-core 4.13 (WCAG 2.0/2.1/2.2, Stufen A und AA, zuzüglich Empfehlungen) auf allen Seiten und Breiten: keine Verstöße.
+- Umbruch bei 200, 250 und 400 Prozent Browser-Zoom sowie zusätzlich mit der größten Schriftstufe des Aa-Widgets geprüft.
+- Gemessene Lighthouse-Werte der Produktionsfassung (lokal ausgeliefert, Chromium 141): Startseite, Speisekarte und Kontakt jeweils SEO 100, Barrierefreiheit 100, Best Practices 100; Leistung 100 (Desktop) beziehungsweise 92 bis 98 (Mobil). Diese Werte sind kein Seobility-Ergebnis.
+- Seobility konnte aus der Arbeitsumgebung nicht aufgerufen werden; es wird deshalb kein Seobility-Wert behauptet.
 
 ## Quellen
 

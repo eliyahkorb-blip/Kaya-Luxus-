@@ -24,6 +24,7 @@ Die Dateien funktionieren auch in einem GitHub-Projektpfad wie `https://NAME.git
 | `impressum.html` | Übernommene Anbieterangaben in neuer Gestaltung |
 | `datenschutz.html` | Erklärung passend zur GitHub-Pages-Vorschau |
 | `bildnachweise.html` | Fotografen, Bild- und Schriftlizenzen |
+| `barrierefreiheit.html` | Bedienhilfen, durchgeführte Prüfungen, bekannte Einschränkungen, BFSG-Einordnung |
 | `404.html` | Eigenständige Fehlerseite |
 
 ## Logo-Dateien
@@ -77,6 +78,11 @@ python tools/verify.py
 node --check assets/site.js
 node tools/verify-behavior.cjs
 ```
+
+Für die Hostinger-Fassung liegt eine fertige ZIP bei: `KAYA-Doener-Hostinger-Produktion.zip`.
+Sie enthält ausschließlich die öffentlichen Dateien, ohne `tools/` und `unterlagen/`.
+Neu erzeugen lässt sie sich mit `python tools/build.py --production` und anschließendem
+Packen der öffentlichen Dateien; danach `python tools/build.py` für die Vorschau ausführen.
 
 Die Prüfungen kontrollieren Dateien, Links, Anker, strukturierte Daten sowie wichtige JavaScript-Funktionen. Sie ersetzen keinen Browserdurchgang. Ein visueller oder Live-Browsertest und Messwerte wie Lighthouse/Core Web Vitals wurden hier nicht durchgeführt. Prüfe die bereitgestellte Vorschau vor Freigabe auf deinem iPad und einem Smartphone; besonders Navigation, lange Speisekarte, Telefonlinks und Karteneinwilligung.
 

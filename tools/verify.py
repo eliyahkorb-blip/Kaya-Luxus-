@@ -62,6 +62,10 @@ for css in OUT.rglob('*.css'):
   require(not ref.startswith(('http:','https:','//')),f'{css.name}: unexpected external request {ref}')
   require((css.parent/ref).is_file(),f'{css.name}: missing {ref}')
 menu=json.loads((Path(__file__).parent/'menu.json').read_text())
+home_html=(OUT/'index.html').read_text()
+for offer in menu['offers']:
+ require(offer['price'] in home_html,f"Offer price {offer['price']} for {offer['day']} missing on the home page")
+ if offer.get('extraPrice'): require(offer['extraPrice'] in home_html,f"Extra offer price {offer['extraPrice']} missing")
 graph=pages['speisekarte.html'].json[0]['@graph']
 schema_menu=next(x for x in graph if x['@type']=='Menu')
 count=sum(len(c['items']) for c in menu['categories'])
@@ -86,7 +90,21 @@ for p in OUT.rglob('*.svg'):
 ET.parse(OUT/'sitemap.xml')
 require((OUT/'.nojekyll').exists(),'.nojekyll missing')
 require(not (OUT/'CNAME').exists(),'Preview should not claim an existing domain')
-require(len(pages)==7,'Expected seven HTML entrypoints')
+require(len(pages)==8,'Expected eight HTML entrypoints')
+REGULAR=['index.html','speisekarte.html','kontakt.html','impressum.html','datenschutz.html','bildnachweise.html','barrierefreiheit.html']
+for name in REGULAR:
+ require(name in pages,f'missing page {name}')
+ if name in pages:
+  require('barrierefreiheit.html' in pages[name].refs,f'{name}: footer is missing the accessibility link')
+acc=pages.get('barrierefreiheit.html')
+if acc:
+ text=(OUT/'barrierefreiheit.html').read_text()
+ for anchor in ['anspruch','einordnung','hilfen','pruefung','grenzen','melden']:
+  require(anchor in acc.ids,f'barrierefreiheit.html: missing section {anchor}')
+ require('BFSG' in text,'barrierefreiheit.html: BFSG assessment missing')
+ require('Kleinstunternehmen' in text,'barrierefreiheit.html: microenterprise exemption missing')
+ require('Schlichtungsstelle' not in text or 'nicht' in text,'barrierefreiheit.html: public-body template must not be claimed')
+ require('vollständig barrierefrei' not in text,'barrierefreiheit.html: unverified full-conformance claim')
 if errors:
  print('\n'.join(errors));sys.exit(1)
 print(f'PASS: {len(pages)} pages; all local links, fragments, images, font paths, SVG/XML/JSON, titles and {count} menu positions checked. No iframe or third-party image/font requests in initial HTML. No browser testing performed.')

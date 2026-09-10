@@ -51,6 +51,7 @@
   function applyReading() {
     root.style.setProperty('--scale', scales[fontLevel]);
     root.classList.toggle('high-contrast', contrast);
+    root.classList.toggle('text-scaled', fontLevel > 0);
     const label = $('#font-level');
     if (label) label.textContent = `${Math.round(scales[fontLevel] * 100)} %`;
     const minus = $('#font-minus'), plus = $('#font-plus');
