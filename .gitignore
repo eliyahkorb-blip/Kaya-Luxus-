@@ -1,0 +1,4 @@
+# Archive gehoeren nicht in das oeffentliche Repository: alles hier wird ueber
+# GitHub Pages ausgeliefert. Die Hostinger-Fassung wird bei Bedarf mit
+# python tools/build.py --production erzeugt und ausserhalb des Repos gepackt.
+*.zip

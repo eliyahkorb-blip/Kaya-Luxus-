@@ -79,10 +79,22 @@ node --check assets/site.js
 node tools/verify-behavior.cjs
 ```
 
-Für die Hostinger-Fassung liegt eine fertige ZIP bei: `KAYA-Doener-Hostinger-Produktion.zip`.
-Sie enthält ausschließlich die öffentlichen Dateien, ohne `tools/` und `unterlagen/`.
-Neu erzeugen lässt sie sich mit `python tools/build.py --production` und anschließendem
-Packen der öffentlichen Dateien; danach `python tools/build.py` für die Vorschau ausführen.
+### Hostinger-Fassung erzeugen
+
+Im Repository liegt bewusst **keine** ZIP-Datei: Alles hier wird über GitHub Pages
+öffentlich ausgeliefert, und ein Archiv im Hauptverzeichnis wäre unter der Vorschau-URL
+herunterladbar. `tools/verify.py` bricht deshalb ab, sobald ein Archiv im Ausgabeordner
+liegt, und `.gitignore` schließt `*.zip` aus.
+
+```bash
+python tools/build.py --production   # Indexierung, produktive Sitemap, Hostinger-Datenschutz
+python tools/verify.py
+# die oeffentlichen Dateien ausserhalb des Repositorys packen:
+#   *.html, assets/, Favicons, site.webmanifest, robots.txt, sitemap.xml,
+#   og-kaya-doener.jpg, .nojekyll
+# ohne tools/, unterlagen/ und assets/images/kaya-standort-original.jpg
+python tools/build.py                # Vorschau wiederherstellen (noindex)
+```
 
 Die Prüfungen kontrollieren Dateien, Links, Anker, strukturierte Daten sowie wichtige JavaScript-Funktionen. Sie ersetzen keinen Browserdurchgang. Ein visueller oder Live-Browsertest und Messwerte wie Lighthouse/Core Web Vitals wurden hier nicht durchgeführt. Prüfe die bereitgestellte Vorschau vor Freigabe auf deinem iPad und einem Smartphone; besonders Navigation, lange Speisekarte, Telefonlinks und Karteneinwilligung.
 

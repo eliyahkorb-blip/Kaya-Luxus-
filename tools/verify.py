@@ -90,6 +90,8 @@ for p in OUT.rglob('*.svg'):
 ET.parse(OUT/'sitemap.xml')
 require((OUT/'.nojekyll').exists(),'.nojekyll missing')
 require(not (OUT/'CNAME').exists(),'Preview should not claim an existing domain')
+archives=sorted(x.name for x in OUT.rglob('*') if x.is_file() and x.suffix.lower() in {'.zip','.tar','.tgz','.gz','.7z','.rar'})
+require(not archives,f'archives must not be published: {archives}')
 require(len(pages)==8,'Expected eight HTML entrypoints')
 REGULAR=['index.html','speisekarte.html','kontakt.html','impressum.html','datenschutz.html','bildnachweise.html','barrierefreiheit.html']
 for name in REGULAR:
