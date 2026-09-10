@@ -1,0 +1,79 @@
+{
+  "reviewed_at": "2026-09-10",
+  "purpose": "Licensed real food photography candidates for a local German Doener restaurant website",
+  "license": {
+    "name": "Unsplash License",
+    "url": "https://unsplash.com/license",
+    "commercial_use": true,
+    "attribution_required": false,
+    "summary": "The official Unsplash License permits free commercial use, downloading and modification. It excludes selling unmodified images and building a competing image service.",
+    "selection_evidence": "These photographs appear as ordinary Download entries, without the Unsplash+ label, on the official Unsplash search pages listed below. Nearby premium entries are explicitly labeled For Unsplash+. The download links resolved to the original images.unsplash.com assets. No Unsplash+ asset was selected.",
+    "verification_limit": "The official search results, contributor profiles where available, download targets, and license were retrieved. Individual short-form photo-detail pages did not render through the web tool; photo_page URLs below are the Unsplash photo-ID routes corresponding to the observed official download links."
+  },
+  "selected": [
+    {
+      "id": "jhTzMj5aJQk",
+      "photographer": "Anima Visual",
+      "photographer_profile": "https://unsplash.com/@animavisual",
+      "photo_page": "https://unsplash.com/photos/jhTzMj5aJQk",
+      "source_listing": "https://unsplash.com/s/photos/doner-kebab",
+      "observed_download_link": "https://unsplash.com/photos/jhTzMj5aJQk/download?force=true",
+      "downloaded_asset_url": "https://images.unsplash.com/photo-1633321702518-7feccafb94d5?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=anima-visual-jhTzMj5aJQk-unsplash.jpg",
+      "license_url": "https://unsplash.com/license",
+      "unsplash_plus": false,
+      "dimensions": [
+        6720,
+        4480
+      ],
+      "bytes": 5566312,
+      "recommended_placement": "Hero, right half",
+      "composition": "Close, angled view of a generous meat-and-salad kebab in a paper sleeve, with fries, on warm white hexagonal tiles. Appetizing texture, no visible people or brands. Strongest selected hero photo.",
+      "crop_guidance": "Square or 4:5 center crop works. Keep the open end of the wrap around 55% x / 56% y; the paper sleeve may run out of frame at the upper left. The warm pale tile background relates to the paper palette.",
+      "subject_note": "Real kebab in rolled flatbread with fries; use as illustrative food photography, not as an exact product-specification image for a German Doener pocket.",
+      "suggested_alt_de": "Kebab im Fladenbrot mit Fleisch, Salat und Pommes auf hellen Fliesen"
+    },
+    {
+      "id": "SZGNQxd0HfI",
+      "photographer": "Ludovic Avice",
+      "photographer_profile": "https://unsplash.com/@loudmotion",
+      "photo_page": "https://unsplash.com/photos/SZGNQxd0HfI",
+      "source_listing": "https://unsplash.com/s/photos/falafel",
+      "observed_download_link": "https://unsplash.com/photos/SZGNQxd0HfI/download?force=true",
+      "downloaded_asset_url": "https://images.unsplash.com/photo-1637861004714-49fa0ccbb993?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=ludovic-avice-SZGNQxd0HfI-unsplash.jpg&w=1600",
+      "license_url": "https://unsplash.com/license",
+      "unsplash_plus": false,
+      "dimensions": [
+        1600,
+        2452
+      ],
+      "bytes": 543037,
+      "recommended_placement": "Secondary editorial image or Falafel menu card",
+      "composition": "Bowl of golden falafel with one split to reveal green herbs, neutral gray background, lemon, herbs and hummus. The upper third supplies quiet background; the bowl is in the lower-right half.",
+      "crop_guidance": "Portrait shows the full editorial setting. For a square menu card, crop toward the lower half, with the falafel bowl centered near 67% x / 65% y.",
+      "suggested_alt_de": "Goldbraune Falafel mit frischen Kraeutern, Zitrone und Hummus",
+      "decode_verification": "Pillow Image.verify() and full Image.load() succeeded with ImageFile.LOAD_TRUNCATED_IMAGES=False.",
+      "replacement_note": "Replaces the incomplete original-resolution download falafel-ludovic-avice.jpg. Use this 1600 px file."
+    },
+    {
+      "id": "TvcjBk5y0wU",
+      "photographer": "Eugene Kucheruk",
+      "photographer_profile": "https://unsplash.com/@fruitboykid",
+      "photo_page": "https://unsplash.com/photos/TvcjBk5y0wU",
+      "source_listing": "https://unsplash.com/s/photos/shawarma",
+      "observed_download_link": "https://unsplash.com/photos/TvcjBk5y0wU/download?force=true",
+      "downloaded_asset_url": "https://images.unsplash.com/photo-1662116765994-1e4200c43589?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=eugene-kucheruk-TvcjBk5y0wU-unsplash.jpg",
+      "license_url": "https://unsplash.com/license",
+      "unsplash_plus": false,
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "bytes": 1043872,
+      "recommended_placement": "Optional third image: wrap menu card or wide food detail",
+      "composition": "A cut toasted wrap in extreme close-up, with colorful vegetables and sauce. Dark blurred background. The photograph is tagged vegan on the Unsplash search result, so do not label it as a specific meat filling.",
+      "crop_guidance": "Best in a landscape crop. A square crop should preserve the cross-section of the wrap in the center-right area. Do not use this as a full-height portrait hero because its appeal depends on the full horizontal wrap.",
+      "suggested_alt_de": "Angeschnittener geroesteter Wrap mit Gemuese und cremiger Sauce"
+    }
+  ],
+  "attribution_suggestion": "Fotos: Anima Visual, Ludovic Avice und Eugene Kucheruk / Unsplash. Attribution is optional under the license; retain source links in the project record."
+}

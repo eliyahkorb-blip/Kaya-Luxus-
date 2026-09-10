@@ -1,0 +1,60 @@
+{
+  "source": "https://kaya-doener-himmelstadt.de/",
+  "retrieved": "2026-09-10",
+  "categories": [
+    {"id":"doener","title":"Döner & Dürüm","intro":"Im Brot, gerollt oder als Lahmacun. Mit Salat und deiner Lieblingssoße.","items":[
+      {"name":"Döner Pute/Rind","description":"Im Fladenbrot mit frischem Salat und Soße nach Wahl","prices":[["klein","6,80"],["groß","7,80"]]},
+      {"name":"Dürüm","description":"Gerolltes Fladenbrot mit Drehspießfleisch, Gemüse und Soße","price":"8,50"},
+      {"name":"Lahmacun mit Fleisch","description":"Türkischer Flammkuchen, gerollt mit Fleisch, Salat und Soße","price":"8,50"},
+      {"name":"Lahmacun mit Salat","description":"Türkischer Flammkuchen, gerollt mit frischem Salat","price":"7,80"}
+    ]},
+    {"id":"teller","title":"Teller & Boxen","intro":"Für den großen Hunger oder direkt zum Mitnehmen.","items":[
+      {"name":"Drehspießteller","description":"Mit Pommes und Salat","prices":[["klein","12,90"],["groß","13,90"]]},
+      {"name":"Drehspießbox","description":"To-go-Box mit Beilage und Soße","price":"8,50"}
+    ]},
+    {"id":"vegetarisch","title":"Vegetarisch","intro":"Falafel, Halloumi oder Gemüse. Im Brot, im Dürüm oder auf dem Teller.","items":[
+      {"name":"Falafel Döner","description":"Im Fladenbrot mit frischem Gemüse und Soße","price":"7,50"},
+      {"name":"Falafel Dürüm","description":"Im Dürüm-Wrap mit Salat und Soße","price":"8,50"},
+      {"name":"Falafeltasche","description":"","price":"7,50"},
+      {"name":"Falafelteller","description":"6 Stück Falafel mit Salat","price":"12,90"},
+      {"name":"Gemüse Döner","description":"Grillgemüse im Fladenbrot mit hausgemachter Soße","price":"7,50"},
+      {"name":"Gemüse Dürüm","description":"Grillgemüse im Dürüm-Wrap mit Soße nach Wahl","price":"7,80"},
+      {"name":"Halloumi Döner","description":"Gegrillter Halloumi-Käse im Fladenbrot","price":"7,50"},
+      {"name":"Halloumi Dürüm","description":"Gegrillter Halloumi-Käse im Dürüm-Wrap","price":"7,80"}
+    ]},
+    {"id":"menues","title":"Menüs","intro":"Dein Hauptgericht mit Pommes und einem Getränk (0,2 l).","items":[
+      {"name":"Menü 1 · Döner","description":"Döner + Pommes + Getränk 0,2 l","price":"11,50"},
+      {"name":"Menü 2 · Dürüm","description":"Dürüm + Pommes + Getränk 0,2 l","price":"12,50"},
+      {"name":"Menü 3 · Burger","description":"Burger + Pommes + Getränk 0,2 l","price":"9,50"},
+      {"name":"Menü 4 · Hähnchen","description":"Halbes Hähnchen + Pommes + Getränk 0,2 l","price":"12,00"}
+    ]},
+    {"id":"grill","title":"Burger & Hähnchen","intro":"Vom Hamburger bis zum ganzen Hähnchen zum Teilen.","items":[
+      {"name":"Hamburger","description":"","price":"5,50"},
+      {"name":"Cheeseburger","description":"","price":"6,50"},
+      {"name":"Halbes Hähnchen","description":"Frisch gegrillt","price":"7,50"},
+      {"name":"Ganzes Hähnchen","description":"Zum Teilen oder für den großen Hunger","price":"12,00"},
+      {"name":"Chicken Nuggets","description":"","prices":[["6 Stück","5,50"],["12 Stück","10,00"]]}
+    ]},
+    {"id":"beilagen","title":"Beilagen & Salate","intro":"Etwas dazu. Oder einfach für sich.","items":[
+      {"name":"Börek","description":"","price":"4,30"},
+      {"name":"Börek mit Salat","description":"2 Stück Börek, Salat und Soße","price":"7,80"},
+      {"name":"Gemüsereibekuchen","description":"","price":"7,80"},
+      {"name":"Salatteller","description":"Mit Thunfisch, Hirse, Antipasti und Käse","price":"8,50"},
+      {"name":"Hummus / Baba Ganoush","description":"Mit Brot","price":"4,50"},
+      {"name":"Beilagen","description":"Pommes, Reis oder Ofenkartoffel","price":"4,50"},
+      {"name":"Baklava","description":"","price":null}
+    ]},
+    {"id":"getraenke","title":"Getränke","intro":"Kalt dazu. Oder ein türkischer Tee zum Schluss.","items":[
+      {"name":"Cola / Fanta / Sprite","description":"0,33 l","price":"2,50"},
+      {"name":"Wasser","description":"0,5 l","price":"2,00"},
+      {"name":"Ayran","description":"0,25 l","price":"2,00"},
+      {"name":"Çay","description":"Türkischer Tee","price":null}
+    ]}
+  ],
+  "sauces": ["Knoblauch","Kräuter","Scharf","Cocktail","Curry","Curryscharf"],
+  "offers": [
+    {"day":"Dienstag","title":"Döner","price":"5,00"},
+    {"day":"Mittwoch","title":"Ganzes Hähnchen","price":"10,00"},
+    {"day":"Freitag","title":"Steak Döner","price":"9,80","extra":"Steak Dürüm","extraPrice":"10,80"}
+  ]
+}
