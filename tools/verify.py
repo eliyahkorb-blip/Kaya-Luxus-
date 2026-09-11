@@ -43,6 +43,8 @@ class Page(HTMLParser):
    self.in_json=False
 
 pages={p.name:Page(p) for p in OUT.glob('*.html')}
+PRODUCTION='noindex' not in (pages['index.html'].meta.get('robots') or '')
+HOME='/' if PRODUCTION else 'index.html'
 for name,page in pages.items():
  require(page.h1==1,f'{name}: expected one h1, got {page.h1}')
  require(not [x for x,c in Counter(page.ids).items() if c>1],f'{name}: duplicate ids')
@@ -53,7 +55,11 @@ for name,page in pages.items():
  for ref in page.refs:
   u=urlsplit(ref)
   if u.scheme or u.netloc:continue
-  require(not u.path.startswith('/'),f'{name}: root-relative link breaks project Pages: {ref}')
+  if not PRODUCTION:
+   require(not u.path.startswith('/'),f'{name}: root-relative link breaks project Pages: {ref}')
+  if u.path.startswith('/'):
+   require(PRODUCTION,f'{name}: absolute path only allowed in production: {ref}')
+   continue
   target=(OUT/unquote(u.path)) if u.path else OUT/name
   require(target.is_file(),f'{name}: missing local resource {ref}')
   if u.fragment and target.name in pages:require(unquote(u.fragment) in pages[target.name].ids,f'{name}: missing fragment {ref}')
@@ -107,6 +113,46 @@ if acc:
  require('Kleinstunternehmen' in text,'barrierefreiheit.html: microenterprise exemption missing')
  require('Schlichtungsstelle' not in text or 'nicht' in text,'barrierefreiheit.html: public-body template must not be claimed')
  require('vollständig barrierefrei' not in text,'barrierefreiheit.html: unverified full-conformance claim')
+# --- Startseiten-Links, WebPage-ID und Serverkonfiguration je Fassung ---
+for name in REGULAR:
+ if name not in pages: continue
+ body=(OUT/name).read_text()
+ if PRODUCTION:
+  require('href="index.html"' not in body,f'{name}: production must link the home page as /')
+  require('href="index.html#angebote"' not in body,f'{name}: production must link offers as /#angebote')
+ else:
+  require('href="/"' not in body,f'{name}: preview must keep the relative home link')
+idpage=[i for g in pages['index.html'].json for i in g.get('@graph',[]) if i.get('@type')=='WebPage']
+require(len(idpage)==1,'index.html: expected exactly one WebPage node')
+if idpage:
+ require(idpage[0]['@id']=='https://kaya-doener-himmelstadt.de/#webpage',
+         f"index.html: WebPage @id should be .../#webpage, got {idpage[0]['@id']}")
+ require(idpage[0]['url']=='https://kaya-doener-himmelstadt.de/',
+         'index.html: WebPage url should be the site root')
+manifest_start=json.loads((OUT/'site.webmanifest').read_text())['start_url']
+require(manifest_start==('/' if PRODUCTION else './index.html'),f'unexpected manifest start_url {manifest_start}')
+
+ht=OUT/'.htaccess'
+if PRODUCTION:
+ require(ht.is_file(),'production build must write .htaccess')
+ if ht.is_file():
+  h=ht.read_text()
+  for needle,label in [
+    ('AddDefaultCharset UTF-8','UTF-8 charset'),
+    ('ErrorDocument 404 /404.html','custom 404 document'),
+    ('DirectoryIndex index.html','directory index'),
+    ('RewriteEngine On','rewrite engine'),
+    ('%{HTTPS} !=on','http to https redirect'),
+    ('X-Forwarded-Proto','proxy-terminated TLS check'),
+    ('^www\\.','www to non-www redirect'),
+    ('index\\.html[\\s?]','index.html to slash redirect'),
+    ('R=301','permanent redirects')]:
+   require(needle in h,f'.htaccess is missing {label}')
+  require('<IfModule mod_rewrite.c>' in h,'.htaccess must guard rewrite rules with IfModule')
+  require(h.count('[R=301')==3,f'.htaccess should define exactly three 301 rules, found {h.count("[R=301")}')
+else:
+ require(not ht.exists(),'preview must not ship an Apache configuration')
+
 if errors:
  print('\n'.join(errors));sys.exit(1)
-print(f'PASS: {len(pages)} pages; all local links, fragments, images, font paths, SVG/XML/JSON, titles and {count} menu positions checked. No iframe or third-party image/font requests in initial HTML. No browser testing performed.')
+print(f'PASS ({"Hostinger production" if PRODUCTION else "GitHub Pages preview"}): {len(pages)} pages; all local links, fragments, images, font paths, SVG/XML/JSON, titles and {count} menu positions checked. No iframe or third-party image/font requests in initial HTML. No browser testing performed.')

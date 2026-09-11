@@ -79,6 +79,38 @@ node --check assets/site.js
 node tools/verify-behavior.cjs
 ```
 
+### Zwei Fassungen, ein Generator
+
+`tools/build.py` erzeugt zwei Varianten aus derselben Quelle:
+
+| | GitHub-Pages-Vorschau | Hostinger-Produktion (`--production`) |
+| --- | --- | --- |
+| Startseiten-Links | `index.html` (relativ) | `/` |
+| Wochenangebote | `index.html#angebote` | `/#angebote` |
+| Indexierung | `noindex` auf allen Seiten | drei Hauptseiten indexierbar |
+| Sitemap | leer | drei Hauptseiten |
+| Hosting im Datenschutz | GitHub Pages | Hostinger |
+| `.htaccess` | wird entfernt | wird geschrieben |
+| `start_url` im Manifest | `./index.html` | `/` |
+
+Der Unterschied bei den Links ist nötig: Die Vorschau läuft unter
+`…github.io/Kaya-Luxus-/`. Dort zeigt `/` auf den GitHub-Account statt auf die
+Startseite, deshalb bleiben dort relative Links. Auf der Hauptdomain liegt die
+Seite im Wurzelverzeichnis, dort ist `/` die richtige Adresse.
+
+### Serverkonfiguration
+
+Die `.htaccess` für Hostinger steht als Vorlage in `tools/build.py` und wird nur
+im Produktionsmodus geschrieben. Sie regelt: `AddDefaultCharset UTF-8`,
+`ErrorDocument 404 /404.html`, `DirectoryIndex index.html` sowie drei
+301-Weiterleitungen (http auf https, www auf ohne www, `/index.html` auf `/`).
+Alle Rewrite-Regeln stehen in einem `<IfModule>`-Block, damit eine abweichende
+Serverkonfiguration keinen Fehler 500 auslöst.
+
+**Vor dem Hochladen:** Liegt in `public_html` bereits eine `.htaccess`, zuerst
+sichern und beide Stände zusammenführen. Diese Datei setzt keine bestehenden
+Hostinger-Regeln voraus, kann sie aber auch nicht kennen.
+
 ### Hostinger-Fassung erzeugen
 
 Im Repository liegt bewusst **keine** ZIP-Datei: Alles hier wird über GitHub Pages
