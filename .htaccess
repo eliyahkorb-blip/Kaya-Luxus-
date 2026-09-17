@@ -1,0 +1,41 @@
+# KAYA Doener - Serverkonfiguration fuer die Hauptdomain
+# Erzeugt von tools/build.py --production. Aenderungen hier werden beim naechsten
+# Build ueberschrieben; die Quelle steht in tools/build.py.
+#
+# Diese Datei setzt keine bereits vorhandenen Hostinger-Regeln voraus und
+# ueberschreibt keine. Sollte in public_html bereits eine .htaccess liegen,
+# deren Regeln vorher sichern und beide Staende zusammenfuehren, statt zu ersetzen.
+# Jede Direktive ist gegen ein fehlendes Modul abgesichert, damit eine abweichende
+# Serverkonfiguration keinen Fehler 500 ausloest.
+
+# Standardzeichensatz fuer Textantworten.
+AddDefaultCharset UTF-8
+
+# Eigene Fehlerseite. Apache liefert sie mit dem echten Status 404 aus.
+ErrorDocument 404 /404.html
+
+# Verzeichnisindex, damit "/" die Startseite ausliefert.
+<IfModule mod_dir.c>
+  DirectoryIndex index.html
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1) /index.html -> /   (absolutes Ziel, erledigt Schema und Host in einem Schritt)
+  #    THE_REQUEST enthaelt die urspruengliche Anfragezeile. Der interne Verweis
+  #    des Verzeichnisindex auf index.html aendert sie nicht, dadurch keine Schleife.
+  RewriteCond %{THE_REQUEST} \s/+(([^\s?]*/)?)index\.html[\s?] [NC]
+  RewriteRule ^ https://kaya-doener-himmelstadt.de/%1 [R=301,L,NE]
+
+  # 2) http -> https, zugleich ohne www.
+  #    Zweite Bedingung fuer den Fall, dass TLS vor dem Webserver endet.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://kaya-doener-himmelstadt.de%{REQUEST_URI} [R=301,L,NE]
+
+  # 3) www. -> ohne www. (wenn bereits https)
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://kaya-doener-himmelstadt.de%{REQUEST_URI} [R=301,L,NE]
+</IfModule>

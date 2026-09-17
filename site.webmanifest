@@ -2,7 +2,7 @@
   "name": "KAYA Döner Himmelstadt",
   "short_name": "KAYA Döner",
   "lang": "de-DE",
-  "start_url": "./index.html",
+  "start_url": "/",
   "scope": "./",
   "display": "browser",
   "background_color": "#f6f3eb",
