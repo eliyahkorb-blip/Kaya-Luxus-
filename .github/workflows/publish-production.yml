@@ -1,0 +1,128 @@
+name: Hostinger-Produktionsbranch aktualisieren
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kaya-hostinger-production
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Produktionsfassung prüfen und veröffentlichen
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Main auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Hostinger-Fassung erzeugen
+        run: python tools/build.py --production
+
+      - name: Inhalt und Verhalten prüfen
+        run: |
+          python tools/verify.py
+          node --check assets/site.js
+          node tools/verify-behavior.cjs
+
+      - name: Schlankes Veröffentlichungspaket zusammenstellen
+        shell: bash
+        run: |
+          set -euo pipefail
+          publish_dir="$RUNNER_TEMP/kaya-production"
+          mkdir -p "$publish_dir"
+
+          files=(
+            .htaccess
+            404.html
+            index.html
+            speisekarte.html
+            kontakt.html
+            impressum.html
+            datenschutz.html
+            bildnachweise.html
+            barrierefreiheit.html
+            robots.txt
+            sitemap.xml
+            site.webmanifest
+            favicon.svg
+            favicon.ico
+            apple-touch-icon.png
+            android-chrome-192x192.png
+            android-chrome-512x512.png
+            og-kaya-doener.jpg
+            assets/site.css
+            assets/site.js
+            assets/brand/kaya-horizontal-dark.svg
+            assets/brand/kaya-horizontal-light.svg
+            assets/brand/kaya-wordmark-white.svg
+            assets/fonts/barlow-condensed-700.woff
+            assets/fonts/barlow-condensed-800.woff
+            assets/fonts/manrope-400.woff
+            assets/fonts/manrope-500.woff
+            assets/fonts/manrope-600.woff
+            assets/fonts/manrope-700.woff
+            assets/fonts/barlowcondensed-OFL.txt
+            assets/fonts/manrope-OFL.txt
+            assets/images/food-falafel-1200.webp
+            assets/images/food-falafel-640.webp
+            assets/images/food-hero-1200.webp
+            assets/images/food-hero-640.webp
+            assets/images/food-wrap-1200.webp
+            assets/images/food-wrap-640.webp
+            assets/images/kaya-standort-1200.webp
+            assets/images/kaya-standort-640.webp
+          )
+
+          for file in "${files[@]}"; do
+            install -D "$file" "$publish_dir/$file"
+          done
+
+          test "$(find "$publish_dir" -type f | wc -l)" -eq 39
+          grep -q 'content="index, follow, max-image-preview:large"' "$publish_dir/index.html"
+          grep -q 'Hostinger International Limited' "$publish_dir/datenschutz.html"
+          test -f "$publish_dir/.htaccess"
+          test ! -e "$publish_dir/tools"
+          test ! -e "$publish_dir/unterlagen"
+
+      - name: Production-Branch aktualisieren
+        shell: bash
+        run: |
+          set -euo pipefail
+          publish_dir="$RUNNER_TEMP/kaya-production"
+          worktree_dir="$RUNNER_TEMP/kaya-production-branch"
+
+          git fetch origin production
+          git worktree add -B production "$worktree_dir" origin/production
+          find "$worktree_dir" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf -- {} +
+          cp -a "$publish_dir"/. "$worktree_dir"/
+
+          cd "$worktree_dir"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Production ist bereits aktuell."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Production-Build aus main ${GITHUB_SHA::7}"
+          git push origin HEAD:production

@@ -44,6 +44,14 @@ Eine Gesamtansicht liegt unter `unterlagen/KAYA-Logo-Uebersicht.png`. Die Regeln
 
 **Vorschau ist absichtlich `noindex`.** So soll der Teststand nicht als zweite KAYA-Website in Suchmaschinen erscheinen. Das ist keine Zugangssperre: Wer den Link kennt, kann eine öffentliche GitHub-Pages-Seite sehen.
 
+### Branches und Hostinger
+
+- `main` ist der vollständige Arbeitsstand mit Generator, Prüfskripten, Unterlagen, Logo-Varianten und der GitHub-Pages-Vorschau.
+- `production` enthält ausschließlich die 39 Dateien, die Hostinger tatsächlich ausliefern soll. Der Branch enthält keine Projektunterlagen, Tests, Originalfotos oder ungenutzten Logo-Varianten und darf nicht direkt bearbeitet werden.
+- Jeder Push auf `main` erzeugt und prüft über `.github/workflows/publish-production.yml` automatisch die Hostinger-Fassung und aktualisiert anschließend `production`.
+
+In Hostinger unter **Erweitert → Git** dieses Repository, den Branch **`production`** und als Ziel das Dokumentenverzeichnis der Domain – üblicherweise **`public_html`** – auswählen. Nachdem die GitHub-Aktion erfolgreich abgeschlossen ist, in hPanel **Bereitstellen** ausführen. Vor der ersten Bereitstellung den bisherigen Inhalt von `public_html` sichern und eine dort vorhandene `.htaccess` mit der Produktionsfassung abgleichen.
+
 Nach der inhaltlichen Freigabe kann die Livefassung für die bestehende Hostinger-Hauptdomain erzeugt werden:
 
 ```bash
