@@ -93,7 +93,7 @@ jobs:
           )
 
           for file in "${files[@]}"; do
-            install -D "$file" "$publish_dir/$file"
+            install -D -m 0644 "$file" "$publish_dir/$file"
           done
 
           test "$(find "$publish_dir" -type f | wc -l)" -eq 39
