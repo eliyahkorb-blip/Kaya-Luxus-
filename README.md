@@ -22,7 +22,7 @@ Die Dateien funktionieren auch in einem GitHub-Projektpfad wie `https://NAME.git
 | `speisekarte.html` | 34 Positionen, alle übernommenen Preise, sechs Soßen, Druckansicht |
 | `kontakt.html` | Telefon, E-Mail, Öffnungszeiten, Anfahrt, optionale Google-Karte |
 | `impressum.html` | Übernommene Anbieterangaben in neuer Gestaltung |
-| `datenschutz.html` | Erklärung passend zur GitHub-Pages-Vorschau |
+| `datenschutz.html` | Datenschutzerklärung für die produktive Hostinger-Website |
 | `bildnachweise.html` | Fotografen, Bild- und Schriftlizenzen |
 | `barrierefreiheit.html` | Bedienhilfen, durchgeführte Prüfungen, bekannte Einschränkungen, BFSG-Einordnung |
 | `404.html` | Eigenständige Fehlerseite |
@@ -51,7 +51,7 @@ python tools/build.py --production
 python tools/verify.py
 ```
 
-Dieser Schritt aktiviert die Indexierung der drei Hauptseiten, erstellt die produktive Sitemap und ändert den Hostingabschnitt der Datenschutzerklärung von GitHub Pages auf Hostinger. Die Produktionsdomain bleibt `https://kaya-doener-himmelstadt.de/`.
+Dieser Schritt aktiviert die Indexierung der drei Hauptseiten, erstellt die produktive Sitemap und stellt die internen Links auf die Hauptdomain um. Der Hostingabschnitt der Datenschutzerklärung nennt bereits in beiden Ausgaben Hostinger. Die Produktionsdomain bleibt `https://kaya-doener-himmelstadt.de/`.
 
 Anschließend die öffentlichen HTML-Dateien, `assets/`, Favicons, `site.webmanifest`, `robots.txt`, `sitemap.xml`, `og-kaya-doener.jpg` und `.nojekyll` nach Hostinger hochladen. `tools/` und `unterlagen/` müssen nicht auf den produktiven Webserver. Eine bestehende Serverkonfiguration, etwa `.htaccess`, vorher sichern und auf Kompatibilität mit den HTML-Routen prüfen. HTTPS und Weiterleitung auf die Hauptdomain im Hosting einrichten beziehungsweise beibehalten.
 
